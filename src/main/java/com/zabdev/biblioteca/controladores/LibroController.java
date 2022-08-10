@@ -29,7 +29,7 @@ public class LibroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Libro> obtenerLibroPorId(@PathVariable Long id, @RequestBody Libro libro) {
+    public ResponseEntity<Libro> obtenerLibroPorId(@PathVariable Long id) {
         Optional<Libro> libroOptional = libroRespository.findById(id);
 
         //si biblioteca no tiene nada

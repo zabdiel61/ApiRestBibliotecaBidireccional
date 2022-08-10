@@ -23,19 +23,6 @@ public class BibliotecaController {
         return ResponseEntity.ok(bibliotecaRepository.findAll(pageable));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Biblioteca> obtenerBibliotecaPorId(@PathVariable Long id, @RequestBody Biblioteca biblioteca) {
-        Optional<Biblioteca> bibliotecaOptional = bibliotecaRepository.findById(id);
-
-        //si biblioteca no tiene nada
-        if (!bibliotecaOptional.isPresent()) {
-            //retoramos que no se ha podido procesar esta entidad
-            return ResponseEntity.unprocessableEntity().build();
-        }
-
-        return ResponseEntity.ok(bibliotecaOptional.get());
-    }
-
     @PostMapping
     public ResponseEntity<Biblioteca> guardarBiblioteca(@Valid @RequestBody Biblioteca biblioteca) {
         Biblioteca bibliotecaGuardada = bibliotecaRepository.save(biblioteca);
@@ -47,7 +34,7 @@ public class BibliotecaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Biblioteca> actualizarBiblioteca(@PathVariable Long id, @RequestBody Biblioteca biblioteca) {
+    public ResponseEntity<Biblioteca> actualizarBiblioteca(@PathVariable Integer id, @RequestBody Biblioteca biblioteca) {
         Optional<Biblioteca> bibliotecaOptional = bibliotecaRepository.findById(id);
 
         //si biblioteca no tiene nada
@@ -65,7 +52,7 @@ public class BibliotecaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Biblioteca> eliminarBiblioteca(@PathVariable Long id) {
+    public ResponseEntity<Biblioteca> eliminarBiblioteca(@PathVariable Integer id) {
         Optional<Biblioteca> bibliotecaOptional = bibliotecaRepository.findById(id);
 
         if (!bibliotecaOptional.isPresent()) {
@@ -76,6 +63,19 @@ public class BibliotecaController {
 
         //retornamos nada
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Biblioteca> obtenerBibliotecaPorId(@PathVariable(name = "id") Integer id) {
+        Optional<Biblioteca> bibliotecaOptional = bibliotecaRepository.findById(id);
+
+        //si biblioteca no tiene nada
+        if (!bibliotecaOptional.isPresent()) {
+            //retoramos que no se ha podido procesar esta entidad
+            return ResponseEntity.unprocessableEntity().build();
+        }
+
+        return ResponseEntity.ok(bibliotecaOptional.get());
     }
 
 }
